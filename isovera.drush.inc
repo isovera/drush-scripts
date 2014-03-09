@@ -29,12 +29,14 @@ function isovera_drush_command() {
   $items['iso-git-commit-dump'] = array(
     'description' => dt('Creates a sql-dump with filename that includes date, git branch and commit hash.'),
     'aliases' => array('isodump'),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_DATABASE,
   );
   $items['iso-dl-commit'] = array(
     'description' => dt('Download and commit a Drupal project'),
     'aliases' => array('dlco'),
     'arguments' => array(
       'project' => 'A drupal.org project name (views, webform, etc.)',
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_SITE,
     ),
   );
 
