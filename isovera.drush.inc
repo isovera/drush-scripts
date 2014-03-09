@@ -61,16 +61,17 @@ function drush_isovera_iso_git_commit_dump() {
    */
   $branch = exec('git rev-parse --abbrev-ref HEAD');
   $hash = exec('git log -n 1 --pretty=%h');
-  $bak_dir = variable_get('isovera_tools_backup_dir');
+  $bak_dir = FALSE;
+  $web_root = drush_invoke_process('@self', 'dd');
+  $conf_bak_dir = variable_get('isovera_tools_backup_dir');
 
   $path = explode('/', $web_root['output']);
   array_pop($path);
   $bak_dir_default = implode('/', $path) . '/backup';
-  
   $drush_bak_dir = '~/drush-backups';
-
-  if(file_exists($bak_dir)) {
-    $bak_dir = $bak_dir;
+  
+  if(file_exists($conf_bak_dir)) {
+    $bak_dir = $conf_bak_dir;
   }
   elseif(file_exists($bak_dir_default)) {
     $bak_dir = $bak_dir_default;
