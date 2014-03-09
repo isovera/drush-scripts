@@ -61,8 +61,23 @@ function drush_isovera_iso_git_commit_dump() {
   $hash = exec('git log -n 1 --pretty=%h');
   $bak_dir = variable_get('isovera_tools_backup_dir');
 
-  if(!file_exists($bak_dir)) {
-    drush_die("The backup directory does not exist.", 0);
+  $path = explode('/', $web_root['output']);
+  array_pop($path);
+  $bak_dir_default = implode('/', $path) . '/backup';
+  
+  $drush_bak_dir = '~/drush-backups';
+
+  if(file_exists($bak_dir)) {
+    $bak_dir = $bak_dir;
+  }
+  elseif(file_exists($bak_dir_default)) {
+    $bak_dir = $bak_dir_default;
+  }
+  elseif(file_exists($drush_bak_dir)) {
+    $bak_dir = $drush_bak_dir;
+  }
+  else {
+    drush_die("No backup directories exist.", 0);
   }
   
   //  Convert slashes to dashes in branch name
